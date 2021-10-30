@@ -1,0 +1,11 @@
+{
+    "name": "makbuk/htdocs",
+
+    "autoload": {
+    	"psr-4": {
+    		"": ""
+    	}
+    },
+
+    "require": {}
+}
