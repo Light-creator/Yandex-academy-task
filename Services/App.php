@@ -18,18 +18,13 @@ class App {
         } else if($method == "PATCH") {
             return PATCH::handle($url);
         } else {
-            return [
-                    'code' => 400,
+
+            http_response_code(400);
+            return json_encode([
                     'message' => 'Bad requests'
-            ];
+            ]);
+
         }
-    }
-
-    private static function get_uri_data() {
-        $method = $_SERVER['REQUEST_METHOD'];
-        $url = $_SERVER['REQUEST_URI'];
-
-        print_r($url);
     }
 
 }
