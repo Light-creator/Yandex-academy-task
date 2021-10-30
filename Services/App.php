@@ -18,12 +18,10 @@ class App {
         } else if($method == "PATCH") {
             return PATCH::handle($url);
         } else {
-            return json_encode(
-                [
+            return [
                     'code' => 400,
                     'message' => 'Bad requests'
-                ]
-            );
+            ];
         }
     }
 

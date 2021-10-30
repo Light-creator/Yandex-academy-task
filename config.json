@@ -1,0 +1,8 @@
+{
+    "db": {
+        "username": "root",
+        "password": "root",
+        "host": "localhost",
+        "db_name": "test_for_mvc"
+    }
+}
