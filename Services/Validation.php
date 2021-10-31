@@ -13,4 +13,17 @@ class Validation {
         }
     }
 
+    public static function relatives_valid($citizens) {
+        foreach($citizens as $citizen) {
+            foreach($citizens as $citizen2) {
+                if($citizen['citizen_id'] != $citizen2['citizen_id'] && in_array($citizen2['citizen_id'], $citizen['relatives'])) {
+                    if(!in_array($citizen['citizen_id'], $citizen2['relatives'])) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
 }

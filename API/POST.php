@@ -17,6 +17,11 @@ class POST {
             DB_PDO::connection();
             $import_id = DB_PDO::$pdo->query("SELECT import_id FROM `import`")->fetch()['import_id'];
 
+            if(Validation::relatives_valid($data['citizens']) == false) {
+                Response::response(400, 'Bad Requests');
+                die();
+            }
+
             foreach($data['citizens'] as $citizen) {
 
                 $fields = self::create_fields($citizen, $import_id);
