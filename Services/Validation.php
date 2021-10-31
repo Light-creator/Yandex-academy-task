@@ -26,4 +26,12 @@ class Validation {
         return true;
     }
 
+    public static function relatives_update_valid($citizen_old, $citizen_new) {
+        if($citizen_old['relatives'] != $citizen_new['relatives']) {
+            return true;
+        } 
+
+        return false;
+    }
+
 }

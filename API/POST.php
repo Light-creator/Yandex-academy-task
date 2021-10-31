@@ -23,6 +23,7 @@ class POST {
             }
 
             foreach($data['citizens'] as $citizen) {
+                $citizen['relatives'] = json_encode($citizen['relatives']);
 
                 $fields = self::create_fields($citizen, $import_id);
 

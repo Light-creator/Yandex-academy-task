@@ -9,7 +9,7 @@ class Response {
         ];
 
         http_response_code($code);
-        echo json_encode($res);
+        print_r(json_encode($res));
     }
 
 }
