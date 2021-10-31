@@ -2,6 +2,8 @@
 namespace API;
 
 use Services\DB_PDO;
+use Services\Response;
+use Services\Validation;
 
 class POST {
     
@@ -17,39 +19,45 @@ class POST {
 
             foreach($data['citizens'] as $citizen) {
 
-                $fields = '(';
-                $questions = '(';
+                $fields = self::create_fields($citizen, $import_id);
 
-                foreach($citizen as $key => $val) {
-                    $fields .= $key.",";
-                    $questions .= ':'.$key.",";
-                }
-
-                $fields .= "import_id)";
-                $questions .= $import_id.")";
-
-                $query_string = "INSERT INTO  citizen ". $fields ." VALUES ". $questions ."";
+                $query_string = "INSERT INTO  citizen ". $fields['fields'] ." VALUES ". $fields['questions'] ."";
                 DB_PDO::$pdo->prepare($query_string)->execute($citizen);
             }
             
-            $res = [
-                'message' => $import_id
-            ];
+            Response::response(201, 'import_id: '.$import_id);
 
-            http_response_code(201);
-            echo json_encode($res);
-
-            DB_PDO::$pdo->prepare("UPDATE import SET import_id=". $import_id++)->execute();
+            DB_PDO::$pdo->prepare("UPDATE `import` SET import_id=". ++$import_id ." WHERE id=1")->execute();
             DB_PDO::close();
 
         } else {
-            $res = [
-                'message' => 'Bad requests'
-            ];
-
-            http_response_code(201);
-            echo json_encode($res);
+            Response::response(400, 'Bad Requests');
         }
+    }
+
+    private static function create_fields($citizen, $import_id) {
+
+        $fields = '(';
+        $questions = '(';
+
+        foreach($citizen as $key => $val) {
+            $fields .= $key.",";
+            $questions .= ':'.$key.",";
+
+            if($key == 'birth_date') {
+                if(!Validation::date_valid($val)) {
+                    Response::response(400, 'Bad Requests');
+                }
+            }
+        }
+
+        $fields .= "import_id)";
+        $questions .= $import_id.")";
+
+        return [
+            'fields' => $fields,
+            'questions' => $questions
+        ];
     }
 
 }
