@@ -29,7 +29,7 @@ class PATCH {
                     self::update_relatives($citizen_old, $citizen_new);
                 }
 
-                Response::response(200, 'Ok');
+                Response::response(200, $citizen_new);
             } else {
                 Response::response(400, 'Bad request');
             }
@@ -68,7 +68,7 @@ class PATCH {
                     }
                 }
 
-                $query_string = "UPDATE citizen SET relatives=". json_encode($citizen_relative_relatives, true) . " WHERE import_id=".$citizen_old['import_id']." AND citizen_id=".$relation;
+                $query_string = "UPDATE citizen SET relatives='". json_encode($citizen_relative_relatives) . "' WHERE import_id=".$citizen_old['import_id']." AND citizen_id=".$relation;
                 DB_PDO::$pdo->prepare($query_string)->execute();
             }
         }
@@ -81,7 +81,7 @@ class PATCH {
                 $citizen_relative_relatives = json_decode($citizen_relative['relatives']);
                 $citizen_relative_relatives[] = $relation;
 
-                $query_string = "UPDATE citizen SET relatives=". json_encode($citizen_relative_relatives, true) . " WHERE import_id=".$citizen_old['import_id']." AND citizen_id=".$relation;
+                $query_string = "UPDATE citizen SET relatives='". json_encode($citizen_relative_relatives) . "' WHERE import_id=".$citizen_old['import_id']." AND citizen_id=".$relation;
                 DB_PDO::$pdo->prepare($query_string)->execute();
             }
         }

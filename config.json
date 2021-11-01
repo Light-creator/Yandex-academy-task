@@ -3,6 +3,6 @@
         "username": "root",
         "password": "root",
         "host": "localhost",
-        "db_name": "mvc"
+        "db_name": "test_for_mvc"
     }
 }
