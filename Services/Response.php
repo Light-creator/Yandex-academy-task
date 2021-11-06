@@ -5,7 +5,8 @@ class Response {
 
     public static function response($code, $msg) {
         http_response_code($code);
-        json_encode($msg);
+        print_r(json_encode($msg));
+        die();
     }
 
 }
